@@ -1,17 +1,21 @@
 <?php
 try {
-    $host = getenv("DB_HOST");
-    $db   = getenv("DB_NAME");
-    $user = getenv("DB_USER");
-    $pass = getenv("DB_PASS");
-    $port = getenv("DB_PORT") ?: 3306;
+    $host = $_ENV['DB_HOST'];
+    $port = $_ENV['DB_PORT'];
+    $db   = $_ENV['DB_NAME'];
+    $user = $_ENV['DB_USER'];
+    $pass = $_ENV['DB_PASS'];
 
-    $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
-
-    $pdo = new PDO($dsn, $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    $pdo = new PDO(
+        "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4",
+        $user,
+        $pass,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
+    );
 } catch (PDOException $e) {
     die("Database connection failed");
 }
-?>
+
