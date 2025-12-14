@@ -2,7 +2,7 @@
 FROM php:8.2-apache
 
 # 2️⃣ Copy the PHP files into the Docker container's web folder
-COPY . /var/www/html/
+COPY . /var/www/html
 
 # 3️⃣ Install PHP extensions (needed for database interaction)
 RUN docker-php-ext-install mysqli pdo pdo_mysql
